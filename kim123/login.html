@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+	<link rel="stylesheet" href="assets/css/style.css">
+	<style>
+		.auth-card{max-width:420px;margin:48px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(16,24,40,0.06)}
+		.auth-card h2{margin-top:0}
+		.field{margin:12px 0}
+		.btn{display:inline-block;padding:8px 14px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer}
+		.msg{padding:10px;border-radius:8px;margin-bottom:10px}
+		.msg.error{background:#fff5f5;color:#9b1c1c;border:1px solid #fed7d7}
+		.msg.success{background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0}
+	</style>
+</head>
+<body>
+	<div class="auth-card card">
+		<h2>Sign in</h2>
+
+		<div id="message" class="msg" style="display:none"></div>
+
+		<form action="login.php" method="POST">
+			<div class="field">
+				<label>Username</label><br>
+				<input type="text" name="username" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+			</div>
+			<div class="field">
+				<label>Password</label><br>
+				<input type="password" name="password" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+			</div>
+			<div class="field">
+				<button class="btn" type="submit">Login</button>
+			</div>
+		</form>
+	</div>
+
+	<script>
+		// Show inline error/success message from query parameters
+		(function(){
+			function getParam(name){
+				const params = new URLSearchParams(window.location.search);
+				return params.get(name);
+			}
+			const msg = getParam('error') || getParam('success');
+			const el = document.getElementById('message');
+			if(msg){
+				el.style.display = 'block';
+				// if 'success' param present, style as success, otherwise error
+				el.className = 'msg ' + (getParam('success') ? 'success' : 'error');
+				try{ el.textContent = decodeURIComponent(msg); }catch(e){ el.textContent = msg; }
+			}
+		})();
+	</script>
+</body>
+</html>

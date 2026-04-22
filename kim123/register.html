@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Register</title>
+	<link rel="stylesheet" href="assets/css/style.css">
+	<style>
+		.auth-card{max-width:420px;margin:48px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(16,24,40,0.06)}
+		.auth-card h2{margin-top:0}
+		.field{margin:12px 0}
+		.btn{display:inline-block;padding:8px 14px;border-radius:8px;background:var(--accent,#2b6cb0);color:#fff;border:none;cursor:pointer}
+		.msg{padding:10px;border-radius:8px;margin-bottom:10px}
+		.msg.error{background:#fff5f5;color:#9b1c1c;border:1px solid #fed7d7}
+		.msg.success{background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0}
+	</style>
+</head>
+<body>
+	<div class="auth-card card">
+		<h2>Register</h2>
+
+		<div id="message" class="msg" style="display:none"></div>
+
+		<form action="register.php" method="POST">
+			<div class="field">
+				<label>Username</label><br>
+				<input type="text" name="username" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+			</div>
+			<div class="field">
+				<label>Email</label><br>
+				<input type="email" name="email" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+			</div>
+			<div class="field">
+				<label>Password</label><br>
+				<input type="password" name="password" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+			</div>
+			<div class="field">
+				<label>Role</label><br>
+				<select name="role" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #e5e7eb">
+					<option value="client" selected>Client</option>
+					<option value="admin">Admin</option>
+				</select>
+			</div>
+			<div class="field">
+				<button class="btn" type="submit">Register</button>
+			</div>
+			<p>Already have an account? <a href="login.php">Login here</a></p>
+		</form>
+	</div>
+
+	<script>
+		(function(){
+			const params = new URLSearchParams(window.location.search);
+			const msg = params.get('error') || params.get('success');
+			const el = document.getElementById('message');
+			if(msg){
+				el.style.display = 'block';
+				el.className = 'msg ' + (params.get('success') ? 'success' : 'error');
+				try{ el.textContent = decodeURIComponent(msg); }catch(e){ el.textContent = msg; }
+			}
+		})();
+	</script>
+</body>
+</html>
